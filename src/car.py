@@ -6,7 +6,7 @@ def menu(cars):
     1. Create Car
     2. Accelerate Car
     3. Brake Car
-    4. Run Car
+    4. Run Car (Running on thread)
     5. Display Cars\n'''
     while True:
         print(m)
@@ -21,9 +21,9 @@ def menu(cars):
         elif option == '3':
             choice = select_car(cars)
             cars[int(choice)].start_braking()
-        elif option == '4':
-            choice = select_car(cars)
-            cars[int(choice)].run()
+        # elif option == '4':
+        #     choice = select_car(cars)
+        #     cars[int(choice)].run()
         elif option == '5':
             disp_cars(cars)
 
@@ -62,7 +62,7 @@ class Car(object):
         if self.braking == True:
             self.braking = False
         self.accel += 1
-        self.dist = self.dist + (self.speed*self.cit) + (self.accel*self.cit**2/2)
+        # self.dist = self.dist + (self.speed*self.cit) + (self.accel*self.cit**2/2)
         self.speed = self.speed + (self.accel*self.cit)
         #print('The car is traveling at a speed of {0}m/s and has traveled a distance of {1}m'.format(self.speed, self.dist))
 
@@ -74,6 +74,7 @@ class Car(object):
         if self.speed <= 0:
             self.accel = 0
             self.speed = 0
+            self.braking = False
             print('Car has come to a halt.')
         elif self.accel > 0:
             self.dist = self.dist + (self.speed*self.cit) - (self.brake_accel*self.cit**2/2)
@@ -93,7 +94,7 @@ class Car(object):
                     self.brake()
                     time.sleep(self.interval)
             self.dist = self.dist + (self.speed*self.cit) + (self.accel*self.cit**2/2)
-            self.speed = self.speed + (self.accel*self.cit)
+            self.speed = self.speed + (self.accel*self.cit)*0.5
             #print('The car is traveling at a speed of {0}m/s and has traveled a distance of {1}m'.format(self.speed, self.dist))
             time.sleep(self.interval)
 
